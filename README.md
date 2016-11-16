@@ -8,11 +8,12 @@
 
 
 [Passport](http://passportjs.org/) strategy for authenticating with a username
-and password.
+, password and URL.
 
-This module lets you authenticate using a username and password in your Node.js
-applications.  By plugging into Passport, local authentication can be easily and
-unobtrusively integrated into any application or framework that supports
+This module lets you authenticate using a username, password, and url in your
+Node.js applications.  By plugging into Passport, local authentication can be
+easily and unobtrusively integrated into any application or framework that
+supports
 [Connect](http://www.senchalabs.org/connect/)-style middleware, including
 [Express](http://expressjs.com/).
 
@@ -33,7 +34,7 @@ credentials and calls `done` providing a user.
 ```js
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
+    User.findOne({ username: username, url: url }, function (err, user) {
       if (err) { return done(err); }
       if (!user) { return done(null, false); }
       if (!user.verifyPassword(password)) { return done(null, false); }
@@ -51,6 +52,7 @@ The available options are:
 
 * `usernameField` - Optional, defaults to 'username'
 * `passwordField` - Optional, defaults to 'password'
+* `urlField` - Optional, defaults to 'url'
 
 Both fields define the name of the properties in the POST body that are sent to the server.
 
@@ -63,9 +65,10 @@ differently, options are available to change the defaults.
     passport.use(new LocalStrategy({
         usernameField: 'email',
         passwordField: 'passwd',
+        passwordField: 'siteurl',
         session: false
       },
-      function(username, password, done) {
+      function(username, password, url, done) {
         // ...
       }
     ));
@@ -80,10 +83,11 @@ accordingly.
     passport.use(new LocalStrategy({
         usernameField: 'email',
         passwordField: 'passwd',
+        passwordField: 'siteurl',
         passReqToCallback: true,
         session: false
       },
-      function(req, username, password, done) {
+      function(req, username, password, url, done) {
         // request object is now first argument
         // ...
       }
@@ -98,7 +102,7 @@ For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
 ```js
-app.post('/login', 
+app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');

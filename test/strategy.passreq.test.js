@@ -8,8 +8,8 @@ var chai = require('chai')
 describe('Strategy', function() {
 
   describe('passing request to verify callback', function() {
-    var strategy = new Strategy({passReqToCallback: true}, function(req, username, password, done) {
-      if (username == 'johndoe' && password == 'secret') {
+    var strategy = new Strategy({passReqToCallback: true}, function(req, username, password, url, done) {
+      if (username == 'johndoe' && password == 'secret' && url == 'http://localhost') {
         return done(null, { id: '1234' }, { scope: 'read', foo: req.headers['x-foo'] });
       }
       return done(null, false);
@@ -31,6 +31,7 @@ describe('Strategy', function() {
           req.body = {};
           req.body.username = 'johndoe';
           req.body.password = 'secret';
+          req.body.url = 'http://localhost';
         })
         .authenticate();
     });

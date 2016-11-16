@@ -7,7 +7,7 @@ var chai = require('chai')
 describe('Strategy', function() {
 
   describe('encountering an error during verification', function() {
-    var strategy = new Strategy(function(username, password, done) {
+    var strategy = new Strategy(function(username, password, url, done) {
       done(new Error('something went wrong'));
     });
 
@@ -23,6 +23,7 @@ describe('Strategy', function() {
           req.body = {};
           req.body.username = 'johndoe';
           req.body.password = 'secret';
+          req.body.url = 'http://localhost';
         })
         .authenticate();
     });
@@ -34,7 +35,7 @@ describe('Strategy', function() {
   });
 
   describe('encountering an exception during verification', function() {
-    var strategy = new Strategy(function(username, password, done) {
+    var strategy = new Strategy(function(username, password, url, done) {
       throw new Error('something went horribly wrong');
     });
 
@@ -50,6 +51,7 @@ describe('Strategy', function() {
           req.body = {};
           req.body.username = 'johndoe';
           req.body.password = 'secret';
+          req.body.url = 'http://localhost';
         })
         .authenticate();
     });

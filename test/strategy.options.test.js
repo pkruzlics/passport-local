@@ -7,8 +7,8 @@ var chai = require('chai')
 
 describe('Strategy', function() {
 
-  describe('handling a request without a body, but no username and password, with message option to authenticate', function() {
-    var strategy = new Strategy(function(username, password, done) {
+  describe('handling a request without a body, but no username & password & url, with message option to authenticate', function() {
+    var strategy = new Strategy(function(username, password, url, done) {
       throw new Error('should not be called');
     });
 
