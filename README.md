@@ -1,3 +1,5 @@
+pkruzlics changes: adding URL in addition to username/password fields
+
 # passport-local
 
 [![Build](https://travis-ci.org/jaredhanson/passport-local.png)](https://travis-ci.org/jaredhanson/passport-local)
