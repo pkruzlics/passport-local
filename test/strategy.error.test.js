@@ -5,14 +5,14 @@ var chai = require('chai')
 
 
 describe('Strategy', function() {
-    
+
   describe('encountering an error during verification', function() {
     var strategy = new Strategy(function(username, password, done) {
       done(new Error('something went wrong'));
     });
-    
+
     var err;
-    
+
     before(function(done) {
       chai.passport(strategy)
         .error(function(e) {
@@ -26,20 +26,20 @@ describe('Strategy', function() {
         })
         .authenticate();
     });
-    
+
     it('should error', function() {
       expect(err).to.be.an.instanceof(Error);
       expect(err.message).to.equal('something went wrong');
     });
   });
-  
+
   describe('encountering an exception during verification', function() {
     var strategy = new Strategy(function(username, password, done) {
       throw new Error('something went horribly wrong');
     });
-    
+
     var err;
-    
+
     before(function(done) {
       chai.passport(strategy)
         .error(function(e) {
@@ -53,11 +53,11 @@ describe('Strategy', function() {
         })
         .authenticate();
     });
-    
+
     it('should error', function() {
       expect(err).to.be.an.instanceof(Error);
       expect(err.message).to.equal('something went horribly wrong');
     });
   });
-  
+
 });
