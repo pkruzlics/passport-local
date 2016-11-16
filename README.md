@@ -22,7 +22,7 @@ supports
 ## Install
 
 ```bash
-$ npm install passport-local
+$ npm install github:pkruzlics/passport-local
 ```
 
 ## Usage
